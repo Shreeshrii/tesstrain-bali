@@ -1,0 +1,7 @@
+data/checkpoints
+data/*/checkpoints
+data/*/tessdata*
+*.log
+nohup.out
+tmp*
+run*
