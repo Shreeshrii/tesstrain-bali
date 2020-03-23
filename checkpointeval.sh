@@ -18,7 +18,7 @@ done < "$CHECKPOINT_FILES"
 TRAINEDDATAFILES=data/$LANG/tessdata_fast/*.traineddata
 for TRAINEDDATA in $TRAINEDDATAFILES  ; do
      TRAINEDDATAFILE="$(basename -- $TRAINEDDATA)"
-      echo -e  "------------------------------------------------------------------- Arabic "
+      echo -e  "------------------------------------------------------------------- Unassigned "
            for PREFIX in $LANG ; do
 			   FONTLIST=$SCRIPTPATH/langdata/$PREFIX.fontslist.txt
                LISTEVAL=$SCRIPTPATH/data/$PREFIX/list.eval
@@ -27,10 +27,10 @@ for TRAINEDDATA in $TRAINEDDATAFILES  ; do
                mkdir $REPORTSPATH
                while IFS= read -r FONTNAME
                do
-                   echo -e  "------------------------------------------------------------------- Arabic"  $PREFIX-${FONTNAME// /_}-${TRAINEDDATAFILE%.*}
+                   echo -e  "------------------------------------------------------------------- Unassigned"  $PREFIX-${FONTNAME// /_}-${TRAINEDDATAFILE%.*}
                     while IFS= read -r LSTMFNAME
                     do
-                            echo ${LSTMFNAME%.*}
+                        ###    echo ${LSTMFNAME%.*}
                         if [[ $LSTMFNAME == *${FONTNAME// /_}* ]]; then
                             OMP_THREAD_LIMIT=1 tesseract ${LSTMFNAME%.*}.$IMGEXT  ${LSTMFNAME%.*}-${TRAINEDDATAFILE%.*} --psm 7 --oem 1  -l  ${TRAINEDDATAFILE%.*}  --tessdata-dir $SCRIPTPATH/data/$LANG/tessdata_fast/  -c page_separator=''   1>/dev/null 2>&1
                             cat ${LSTMFNAME%.*}.gt.txt   >>  $REPORTSPATH/gt-$PREFIX-${FONTNAME// /_}.txt
@@ -59,4 +59,4 @@ for TRAINEDDATA in $TRAINEDDATAFILES  ; do
     --verbosity 0  2>&1 |  egrep 'OCR|Truth' 
 done
 
-egrep 'Accuracy$|Digits|Punctuation' reports/checkpointeval.txt > reports/checkpointeval-summary.txt
+egrep 'Unassigned|Accuracy$|Digits|Punctuation' reports/checkpointeval.txt > reports/checkpointeval-summary.txt

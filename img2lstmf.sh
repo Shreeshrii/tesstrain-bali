@@ -20,7 +20,7 @@ while IFS= read -r fontname
         done
         cp "${my_file%.*}".png $SCRIPTPATH/langdata/${fontname// /_}.png
         cp "${my_file%.*}".gt.txt $SCRIPTPATH/langdata/${fontname// /_}.gt.txt
-        ls -1  "$prefix"/*.lstmf > $SCRIPTPATH/data/all-${fontname// /_}-$MODEL-lstmf
+        ### ls -1  "$prefix"/*.lstmf > $SCRIPTPATH/data/all-${fontname// /_}-$MODEL-lstmf
         echo "Done with ${fontname// /_}"
      done < "$fontlist"
 
